@@ -6,7 +6,7 @@ export default function StudentInfo()
         <main>
             <ul>
                 <li>Linden Wright</li>
-                <li><Link href="https://github.com/Reann-Shepard">GitHub Repository</Link></li>
+                <li>GitHub Repository Link: <Link href="https://github.com/Reann-Shepard">Reann-Shepard</Link></li>
             </ul>
         </main>
     );
