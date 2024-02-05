@@ -1,0 +1,55 @@
+// Arrays
+
+// Creating, accessing, and modifying arrays
+// Methods: map, filter, sort, reduce
+
+// Creating an array
+const arr = [];
+
+// setting values
+arr[0] = 3;
+arr[1] = 4;
+arr[2] = 5;
+
+// creating an array with values
+const arr2 = [3, 4, 5];
+
+// accessing values
+console.log(arr2[1]); // 4
+
+// map function - returns a new array with the results of calling a provided function on every element in the calling array
+const arr3 = arr2.map((value) => value * 2); // [6, 8, 10]
+const arr4 = arr3.map( n => n + 20); // [26, 28, 30]
+
+// filter function - returns a new array with all elements that pass the test implemented by the provided function
+const arr5 = arr2.filter(
+    (value) => // function
+    value > 3 // condition
+    ); // [4, 5]
+
+// sort function - sorts the elements of an array in place and returns the array
+// This one is different from the others because it modifies the original array. It doesn't return a new array.
+const arr6 = [3, 4, 5, 1, 2, 10, 12, 21];
+const arr7 = arr6;
+arr6.sort(); // [1, 10, 12, 2, 21, 3, 4, 5] - not what we want, right?
+// sort() by default sorts the elements as strings. To sort them as numbers, we need to pass a function to it.
+arr6.sort((a, b) => a - b); // [1, 2, 3, 4, 5, 10, 12, 21]
+// sort takes a function as an argument.
+// This function should return a negative number if a should come before b,
+// a positive number if a should come after b,
+// and 0 if they are equal.
+arr7.sort((a, b) => { if (a < b) return -1; if (a > b) return 1; return 0}); // [1, 2, 3, 4, 5, 10, 12, 21]
+
+// reduce function - applies a function against an accumulator and each element in the array (from left to right) to reduce it to a single value
+const arr7 = arr2.reduce(
+    (acc, value) => acc + value, // function
+    0 // initial value
+    ); // 12
+
+const handleClick = (id) => {
+    alert(id);
+}
+
+onClick() {
+    handleClick(() => handleClick(dog.id));
+}
