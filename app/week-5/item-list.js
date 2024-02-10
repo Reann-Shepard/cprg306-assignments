@@ -23,13 +23,29 @@ export default function ItemList() {
 
   const [sortBy, setSortBy] = useState("name");
 
-  const sortedItems = items.sort((a, b) => {
+  let sortedItems = items.sort((a, b) => {
     if (sortBy === "name") {
       return a.name.localeCompare(b.name);
-    } else {
+    } else if (sortBy === "category") {
+      return a.category.localeCompare(b.category);
+    } else if (sortBy === "group") {
       return a.category.localeCompare(b.category);
     }
   });
+
+  // Include new functionality to include a third button that sorts the items of the same category together
+  // Make sure this is another grouping and doesn't affect the sorting of the items by category
+  // Use reduce to group the items by category
+
+  if (sortBy === "group") {
+    sortedItems = sortedItems.reduce((acc, item) => {
+      if (!acc[item.category]) {
+        acc[item.category] = [];
+      }
+      acc[item.category].push(item);
+      return acc;
+    }, {});
+  }
 
   return (
     <div>
@@ -51,11 +67,29 @@ export default function ItemList() {
         >
           Category
         </button>
+        <button
+          className={`${
+            sortBy === "group" ? "bg-orange-500" : "bg-orange-900"
+          } text-white m-2 w-32 rounded`}
+          onClick={() => setSortBy("group")}
+        >
+          Grouped Category
+        </button>
       </div>
       <div>
-        {sortedItems.map((item) => (
-          <Item key={item.id} {...item} />
-        ))}
+        {sortBy === "group" &&
+          Object.keys(sortedItems).map((category) => (
+            <div key={category}>
+              <h2 className="text-2xl font-bold m-2 text-transform: capitalize">
+                {category}
+              </h2>
+              {sortedItems[category].map((item) => (
+                <Item key={item.id} {...item} />
+              ))}
+            </div>
+          ))}
+        {sortBy !== "group" &&
+          sortedItems.map((item) => <Item key={item.id} {...item} />)}
       </div>
     </div>
   );
