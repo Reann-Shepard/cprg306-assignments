@@ -39,10 +39,10 @@ export default function ItemList() {
 
   if (sortBy === "group") {
     sortedItems = sortedItems.reduce((acc, item) => {
-      if (!acc[item.category]) {
-        acc[item.category] = [];
+      if (!acc[item.category]) { // this line is checking if the category exists in the accumulator
+        acc[item.category] = []; // this line is creating a new array for each category
       }
-      acc[item.category].push(item);
+      acc[item.category].push(item); // this line is pushing the item into the array for the category
       return acc;
     }, {});
   }
