@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Item from "./item";
 
-export default function ItemList({ items, onDelete }) {
+export default function ItemList({ items, onItemDelete, onItemSelect }) {
   const [sortBy, setSortBy] = useState("name");
 
   let sortedItems = items.sort((a, b) => {
@@ -34,7 +34,7 @@ export default function ItemList({ items, onDelete }) {
         <button
           className={`${
             sortBy === "name" ? "bg-orange-500" : "bg-orange-900"
-          } text-white m-2 w-32 rounded`}
+          } text-white m-2 w-24 rounded`}
           onClick={() => setSortBy("name")}
         >
           Name
@@ -42,7 +42,7 @@ export default function ItemList({ items, onDelete }) {
         <button
           className={`${
             sortBy === "category" ? "bg-orange-500" : "bg-orange-900"
-          } text-white m-2 w-32 rounded`}
+          } text-white m-2 w-24 rounded`}
           onClick={() => setSortBy("category")}
         >
           Category
@@ -50,7 +50,7 @@ export default function ItemList({ items, onDelete }) {
         <button
           className={`${
             sortBy === "group" ? "bg-orange-500" : "bg-orange-900"
-          } text-white m-2 w-32 rounded`}
+          } text-white m-2 w-24 rounded`}
           onClick={() => setSortBy("group")}
         >
           Grouped Category
@@ -64,13 +64,23 @@ export default function ItemList({ items, onDelete }) {
                 {category}
               </h2>
               {sortedItems[category].map((item) => (
-                <Item key={item.id} {...item} onDelete={onDelete} />
+                <Item
+                  key={item.id}
+                  {...item}
+                  onDelete={onItemDelete}
+                  onSelect={onItemSelect}
+                />
               ))}
             </div>
           ))}
         {sortBy !== "group" &&
           sortedItems.map((item) => (
-            <Item key={item.id} {...item} onDelete={onDelete} />
+            <Item
+              key={item.id}
+              {...item}
+              onDelete={onItemDelete}
+              onSelect={onItemSelect}
+            />
           ))}
       </div>
     </div>
