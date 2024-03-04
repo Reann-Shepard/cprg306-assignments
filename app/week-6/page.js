@@ -1,29 +1,26 @@
 "use client";
 
-import DogForm from "./dog-form.js";
-import DogList from "./dog-list.js";
-import dogData from "./dog-data.json";
 import { useState } from "react";
+import ItemList from "./item-list.js";
+import NewItem from "./new-item.js";
+import itemsData from "./items.json";
 
 export default function Page() {
-  const [dogs, setDogs] = useState(dogData);
+  const [items, setItems] = useState(itemsData);
 
-  const addDog = (dog) => {
-    setDogs([...dogs, dog]);
-    // you cannot do something like dogs.push(dog) because that would mutate the state
-    // the spread operator ... creates a new array with the old dogs and the new dog
+  const handleAddItem = (item) => {
+    setItems([...items, item]);
   };
 
-  const deleteDog = (id) => {
-    setDogs(dogs.filter((dog) => dog.id !== id));
+  const handleDeleteItem = (id) => {
+    setItems(items.filter((item) => item.id !== id));
   };
 
   return (
-    <div>
-      <h1>Week 6</h1>
-      <h2>Manage Dogs</h2>
-      <DogList dogs={dogs} onDelete={deleteDog}/>
-      <DogForm onAddDog={addDog} />
-    </div>
+    <main className="bg-slate-950 m-4">
+      <h1 className="text-3xl font-bold m-2">Shopping List</h1>
+      <NewItem onAddItem={handleAddItem} />
+      <ItemList items={items} onDelete={handleDeleteItem} />
+    </main>
   );
 }

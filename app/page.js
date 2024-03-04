@@ -1,10 +1,9 @@
-import Link from 'next/link';
+import Link from "next/link";
 
-export default function Page()
-{
+export default function Page() {
   return (
-  <main>
-    <h1>CPRG 306: Web Development 2 - Assignments</h1>
+    <main>
+      <h1>CPRG 306: Web Development 2 - Assignments</h1>
 
     <ul>
       <li>
@@ -22,12 +21,8 @@ export default function Page()
       <li>
         <Link href="week-6">Week 6 Assignment</Link>
       </li>
-      <li>
-        <Link href="week-7">Week 7 Assignment</Link>
-      </li>
     </ul>
   </main>
 
   );
 }
-
