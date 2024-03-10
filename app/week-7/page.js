@@ -18,13 +18,13 @@ export default function Page() {
     setItems(items.filter((item) => item.id !== id));
   };
 
-  const handleItemSelect = (name) => {
+  const handleItemSelect = (id) => {
     // Make sure to clean up the name before setting it, such as the emojis
-    name = name.replace(
-      /([\u2700-\u27BF]|[\uE000-\uF8FF]|�[�-�]|�[�-�]|[\u2011-\u26FF]|�[�-�])/g,
-      ""
-    );
-    setSelectedItemName(name);
+    const name = items.find((item) => item.id === id).name;
+    let cleanedName = name.split(",")[0];
+    cleanedName = cleanedName.replace(/[^a-z0-9\s,]/gi, "").trim();
+    console.log(cleanedName);
+    setSelectedItemName(cleanedName);
   };
 
   // Ensure that the Shopping list and Meal Ideas are displayed side by side
@@ -37,13 +37,14 @@ export default function Page() {
       <div className="flex">
         <div>
           <NewItem onAddItem={handleAddItem} />
-          <ItemList items={items} onItemDelete={handleDeleteItem} />
+          <ItemList
+            items={items}
+            onDeleteItem={handleDeleteItem}
+            onSelectItem={handleItemSelect}
+          />
         </div>
         <div>
-          <MealIdeas
-            onItemSelect={handleItemSelect}
-            ingredient={selectedItemName}
-          />
+          <MealIdeas ingredient={selectedItemName} />
         </div>
       </div>
     </main>

@@ -6,19 +6,10 @@ export default function Item({
   onDelete,
   onSelect,
 }) {
-  // use addEventListener to determine when the user selects an item
-  // use the onSelect prop to pass the selected item to the parent component
-  // use the item's id to identify the selected item
-  // use the click event to trigger the onSelect function
-
-  const handleClick = () => {
-    onSelect(id);
-  };
-
   return (
     <div
       className="m-4 p-2 max-w-sm bg-slate-900 hover:bg-orange-800 cursor-pointer"
-      onClick={handleClick}
+      onClick={() => onSelect(id)}
     >
       <h2 className="text-xl font-bold">
         <button

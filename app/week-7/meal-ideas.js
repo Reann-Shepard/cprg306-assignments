@@ -13,27 +13,49 @@ import { useState, useEffect } from "react";
 //    strMealThumb: URL of an image of the meal
 // Should be an async function
 
-async function fetchMealIdeas(ingredient) {
+const fetchMealIdeas = async (ingredient) => {
   const response = await fetch(
     `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`
   );
   const data = await response.json();
   return data.meals;
-}
+};
 
 export default function MealIdeas({ ingredient }) {
-  // Define a state vairable using the useState hook: meals. meals will hold the list of meal ideas fetched from the API. Initialize it to an empty array.
+  // Define a state variable using the useState hook: meals. meals will hold the list of meal ideas fetched from the API. Initialize it to an empty array.
   const [meals, setMeals] = useState([]);
 
   // Define a function called loadMealIdeas which calls the ingredient prop and stores the result in the meals state variable
-  async function loadMealIdeas() {
-    const data = await fetchMealIdeas(ingredient);
-    setMeals(data);
-  }
+  const loadMealIdeas = async () => {
+    const mealIdeas = await fetchMealIdeas(ingredient);
+    setMeals(mealIdeas);
+  };
+
+  // Define a function called checkForMeals which checks if the meals array is empty. If it is, return a message saying "No meal ideas found"
+  // If the ingredient prop is empty, return a message saying "Select an ingredient to see meal ideas"
+  // If the array is found, return the meals array
+  const checkForMeals = () => {
+    if (ingredient === "") {
+      return "Select an ingredient to see meal ideas";
+    } else if (meals === null) {
+      return "No meal ideas found";
+    } else {
+      return meals.map((meal, index) => {
+        return (
+          <div
+            key={index}
+            className="bg-slate-800 p-2 my-2 rounded-lg hover:bg-orange-800 cursor-pointer transition duration-300 ease-in-out"
+          >
+            <p>{meal.strMeal}</p>
+          </div>
+        );
+      });
+    }
+  };
 
   // Use the useEffect hook to call the loadMealIdeas function when the ingredient prop changes
   useEffect(() => {
-    loadMealIdeas();
+    loadMealIdeas(ingredient);
   }, [ingredient]);
 
   // Render the meal ideas as a list of cards
@@ -44,21 +66,7 @@ export default function MealIdeas({ ingredient }) {
   return (
     <div>
       <h2 className="text-2xl font-bold m-2">Meal Ideas</h2>
-      <div className="">
-        {meals.map((meal) => (
-          <div
-            key={meal.idMeal}
-            className="bg-slate-800 p-2 my-2 rounded-lg hover:bg-orange-800 cursor-pointer transition duration-300 ease-in-out"
-          >
-            <img
-              src={meal.strMealThumb}
-              alt={meal.strMeal}
-              className="w-full h-48 object-cover rounded-lg mb-4"
-            />
-            <h3 className="text-lg font-bold">{meal.strMeal}</h3>
-          </div>
-        ))}
-      </div>
+      <div className="">{checkForMeals()}</div>
     </div>
   );
 }
