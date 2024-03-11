@@ -10,6 +10,9 @@ import MealIdeas from "./meal-ideas.js";
 export default function Page() {
   const { user, firebaseSignOut } = useUserAuth();
 
+  const [items, setItems] = useState(itemsData);
+  const [selectedItemName, setSelectedItemName] = useState("");
+
   // If the user is not logged in, provide a button that redirect them to the login page with the following message: "Please log in to view your shopping list."
   if (!user) {
     return (
@@ -24,9 +27,6 @@ export default function Page() {
       </div>
     );
   }
-
-  const [items, setItems] = useState(itemsData);
-  const [selectedItemName, setSelectedItemName] = useState("");
 
   const handleAddItem = (item) => {
     setItems([...items, item]);

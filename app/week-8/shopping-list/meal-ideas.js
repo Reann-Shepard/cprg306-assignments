@@ -56,7 +56,7 @@ export default function MealIdeas({ ingredient }) {
   // Use the useEffect hook to call the loadMealIdeas function when the ingredient prop changes
   useEffect(() => {
     loadMealIdeas(ingredient);
-  }, [ingredient]);
+  }, [ingredient, loadMealIdeas]);
 
   // Render the meal ideas as a list of cards
   // Each card should display the meal's name and an image of the meal
